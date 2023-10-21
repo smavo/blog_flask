@@ -5,7 +5,7 @@ bp = Blueprint('home', __name__)
 
 @bp.route('/')
 def index():
-    return 'Pagina de Inicio'
+    return render_template('index.html')
 
 
 @bp.route('/blog')
