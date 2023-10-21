@@ -24,11 +24,9 @@
                 </a>
 
                 <div class="text-end">
-                    {% if not g.user %}
-                    <a href="" class="btn btn-outline-light me-2">Iniciar sesión</a>
-                    <a href="" class="btn btn-primary">Registrate</a>
 
-                    {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light me-2">Iniciar sesión</a>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Registrate</a>
 
                     <a href="#" class="link-light text-decoration-none dropdown-toggle" data-bs-toggle="dropdown">
                         <img src="{{ url_for('static', filename = 'img/user-light.png') }}" alt="mdo" width="32" height="32" class="rounded-circle">
@@ -36,7 +34,7 @@
                     <ul class="dropdown-menu text-small">
 
                         <li>
-                                    <span class="dropdown-item fw-bold">¡Hola, Sergio</span>
+                             <span class="dropdown-item fw-bold">¡Hola, Sergio</span>
                         </li>
 
                         <li>
@@ -68,7 +66,7 @@
                             </a>
                         </li>
                     </ul>
-                    {% endif %}
+
                 </div>
             </div>
         </div>
