@@ -21,5 +21,10 @@ def create_app():
     from core import posts
     app.register_blueprint(posts.bp)
 
+    from .models import User, Post
+
+    with app.app_context():
+        db.create_all()
+
     return app
 
