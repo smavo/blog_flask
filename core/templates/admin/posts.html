@@ -15,21 +15,25 @@
         <table class=" table">
             <thead>
                 <tr>
+                    <th class="fs-5">Id </th>
                     <th class="fs-5">Título del Blog </th>
+                    <th class="fs-5">Descripción </th>
                     <th colspan="2" class="fs-5">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for post in posts | reverse %}
-                {% if g.user.id == post.author %}
-                <tr>
-                    <td>{{ post.title }}</td>
-                    <td>
-                        <a href="" class="btn btn-sm btn-warning">Editar</a>
-                        <a href="" class="btn btn-sm btn-danger">Eliminar</a>
-                    </td>
-                </tr>
-                {% endif %}
+                    {% if g.user.id == post.author %}
+                    <tr>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.info|safe|truncate(90) }}</td>
+                        <td>
+                            <a href="{{ url_for('post.update', id=post.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                            <a href="" class="btn btn-sm btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endif %}
                 {% endfor %}
             </tbody>
         </table>
