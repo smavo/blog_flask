@@ -39,3 +39,8 @@ def blog(url):
     return render_template('blog.html', post=post, get_user=get_user)
 
 
+@bp.route('/posts')
+def posts_index():
+    # posts = Post.query.all()
+    posts = Post.query.order_by(Post.created.desc()).all()
+    return render_template('posts.html', posts=posts, get_user=get_user)
