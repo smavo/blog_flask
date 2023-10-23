@@ -8,3 +8,5 @@ class Config:
     SECRET_KEY = 'smavodev'
 
     SQLALCHEMY_DATABASE_URI = POSTGRESQL
+
+    CKEDITOR_PKG_TYPE = 'basic'  # full

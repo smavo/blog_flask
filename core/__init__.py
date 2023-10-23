@@ -11,6 +11,9 @@ def create_app():
     app.config.from_object('config.Config')
     db.init_app(app)
 
+    from flask_ckeditor import CKEditor
+    ckeditor = CKEditor(app)
+
     # Manejo de error 404: página no encontrada
     @app.errorhandler(404)
     def page_not_found(error):
