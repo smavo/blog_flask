@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<main class="container py-5">
+    <div class="row">
+        <h1>Search Results</h1>
+
+        {% if value == 'hidden' %}
+        {% for post in posts | reverse %}
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <h3 class="mb-0">{{post.title}}</h3>
+
+                    <p class="card-text mb-auto">{{ post.info|safe|truncate(150) }}</p>
+                    <a href="{{ url_for('home.blog', url = post.url) }}" class="stretched-link">Continuar leendo</a>
+                    <p class="card-text mt-3">
+                        {% if get_user(post.author).photo is none %}
+                        <img src="{{ url_for('static', filename = 'img/user-dark.png') }}" alt="mdo" width="30"
+                             class="rounded-circle">
+                        {% else %}
+                        <img src="{{ url_for('static', filename = get_user(post.author).photo ) }}" alt="mdo" width="30"
+                             class="rounded-circle">
+                        {% endif %}
+                        <span class="mb-1 text-muted"> <b>{{ get_user(post.author).username }}</b> - {{ post.created.strftime('%d de %B %Y') }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No posts found.</p>
+        {% endif %}
+    </div>
+</main>
+
+{% endblock %}

@@ -17,7 +17,7 @@
             <p>
                 ¡Únete a nuestra comunidad hoy y comienza a compartir tus ideas con el mundo!
             </p>
-            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-dark w-50 fs-3">Registrate</a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-primary">Registrate</a>
 
         </div>
         <div class="col-md-6">
@@ -39,9 +39,9 @@
             </p>
 
             <div class="col container">
-                <form class="d-flex" method="post">
-                    <input class="form-control me-2" type="search"  name="search" placeholder="Buscar" aria-label="Search">
-                    <button type="submit" class="btn btn-primary btn-lg">Buscar</button>
+                <form class="d-flex" action="{{ url_for('home.search') }}" method="GET">
+                    <input type="text" class="form-control" name="search" placeholder="Search posts" aria-label="Search">
+                    <button type="submit" class="btn btn-primary btn-lg">Search</button>
                 </form>
             </div>
         </div>
@@ -49,6 +49,9 @@
 </div>
 
 <main class="container py-5">
+
+    <h1>Ultimos Posts publicados</h1>
+
     <div class="row">
         {% for post in posts | reverse %}
         <div class="col-md-6">
