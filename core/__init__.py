@@ -14,6 +14,9 @@ def create_app():
     from flask_ckeditor import CKEditor
     ckeditor = CKEditor(app)
 
+    import locale
+    locale.setlocale(locale.LC_ALL, 'es_ES')
+
     # Manejo de error 404: página no encontrada
     @app.errorhandler(404)
     def page_not_found(error):
