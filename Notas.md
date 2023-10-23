@@ -12,3 +12,6 @@ pip install -U Flask-WTF
 
 https://flask-ckeditor.readthedocs.io/en/latest/basic.html#installation
  pip install flask-ckeditor
+
+https://pypi.org/project/flask-paginate/
+pip install flask-paginate

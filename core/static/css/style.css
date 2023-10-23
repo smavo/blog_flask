@@ -49,3 +49,24 @@ h6 {
     color: #727272;
 }
 
+
+
+.pagination {
+   display: flex;
+   justify-content: flex-end;
+   margin-top: 20px;
+}
+
+
+.pagination a {
+   padding: 6px 12px;
+   margin: 0 3px;
+   border: 1px solid #ddd;
+   text-decoration: none;
+   color: black;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+}

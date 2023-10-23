@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, url_for, request, session, flash, 
 from .auth import login_required
 from .models import Post
 from core import db
+from flask_paginate import Pagination, get_page_parameter
 
 bp = Blueprint('post', __name__, url_prefix='/post')
 
@@ -10,9 +11,13 @@ bp = Blueprint('post', __name__, url_prefix='/post')
 @login_required
 def posts():
     user_id = session.get('user_id')
-    page = request.args.get('page', 1, type=int)
-    posts = Post.query.filter_by(author=user_id).paginate(page=page, per_page=2)
-    # posts = Post.query.all()
+    # page = request.args.get('page', 1, type=int)
+    # posts = Post.query.filter_by(author=user_id).paginate(page=page, per_page=2)
+    # # posts = Post.query.all()
+
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+    per_page = 10  # Ajusta la cantidad de posts por página según tus necesidades
+    posts = Post.query.filter_by(author=user_id).paginate(page=page, per_page=per_page, error_out=False)
     return render_template('admin/posts.html', posts=posts)
 
 
