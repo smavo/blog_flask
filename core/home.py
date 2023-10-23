@@ -9,10 +9,22 @@ def get_user(id):
     return user
 
 
-@bp.route('/')
+def search_posts(query):
+    posts = Post.query.filter(Post.title.ilike(f'%{query}%')).all()
+    return posts
+
+
+@bp.route('/', methods=['GET', 'POST'])
 def index():
     # posts = Post.query.all()
     posts = Post.query.order_by(Post.created.desc()).limit(5).all()  # Los últimos 5 Mostrar
+
+    if request.method == 'POST':
+        query = request.form.get('search')
+        posts = search_posts(query)
+        value = 'hidden'
+        return render_template('index.html', posts=posts, get_user=get_user, value=value)
+
     return render_template('index.html', posts=posts, get_user=get_user)
 
 
