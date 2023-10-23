@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from core import db
 from werkzeug.utils import secure_filename
+import os
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -99,18 +100,30 @@ def profile(id):
 
     if request.method == 'POST':
         user.username = request.form.get('username')
+        user.email = request.form.get('email')
         password = request.form.get('password')
 
         error = None
+
         if len(password) != 0:
             user.password = generate_password_hash(password)
         elif len(password) > 0 and len(password) < 6:
-            error = 'La contraseña deve terner mas 5 caracteres'
+            error = 'La contraseña debe tener mas 5 caracteres'
 
-        if request.files['photo']:
+        if 'photo' in request.files:
             photo = request.files['photo']
-            photo.save(f'core/static/media/{secure_filename(photo.filename)}')
-            user.photo = f'media/{secure_filename(photo.filename)}'
+            if photo.filename != '':
+                if user.photo:
+                    # Eliminar la imagen anterior si existe
+                    try:
+                        os.remove(f'core/static/{user.photo}')
+                    except OSError as e:
+                        flash(f"Error al eliminar la imagen anterior: {e}")
+
+                # Guardar la nueva imagen
+                filename = secure_filename(photo.filename)
+                photo.save(f'core/static/media/{filename}')
+                user.photo = f'media/{filename}'
 
         if error is not None:
             flash(error)
@@ -121,5 +134,4 @@ def profile(id):
         flash(error)
 
     return render_template('auth/profile.html', user=user)
-
 
