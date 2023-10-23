@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, url_for, redirect, flash,
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
 from core import db
+from werkzeug.utils import secure_filename
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -91,6 +92,34 @@ def login_required(view):
     return wrapped_view
 
 
-@bp.route('/profile')
-def profile():
-    return 'Pagina de Perfil de Usuario'
+@bp.route('/profile/<int:id>', methods=('GET', 'POST'))
+@login_required
+def profile(id):
+    user = User.query.get_or_404(id)
+
+    if request.method == 'POST':
+        user.username = request.form.get('username')
+        password = request.form.get('password')
+
+        error = None
+        if len(password) != 0:
+            user.password = generate_password_hash(password)
+        elif len(password) > 0 and len(password) < 6:
+            error = 'La contraseña deve terner mas 5 caracteres'
+
+        if request.files['photo']:
+            photo = request.files['photo']
+            photo.save(f'core/static/media/{secure_filename(photo.filename)}')
+            user.photo = f'media/{secure_filename(photo.filename)}'
+
+        if error is not None:
+            flash(error)
+        else:
+            db.session.commit()
+            return redirect(url_for('auth.profile', id=user.id))
+
+        flash(error)
+
+    return render_template('auth/profile.html', user=user)
+
+

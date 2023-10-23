@@ -45,20 +45,20 @@
                             <hr class="dropdown-divider">
                         </li>
 
-                        <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="">
-                                <span class="d-inline-block bg-success rounded-circle p-1"></span>
-                                Crear Blog
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="{{ url_for('post.create') }}">
+                                <span class="d-inline-block bg-success rounded-circle p-1"></span>Crear Blog
                             </a>
                         </li>
 
-                        <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="">
-                                <span class="d-inline-block bg-primary rounded-circle p-1"></span>
-                                Mis Blogs
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="{{ url_for('post.posts') }}">
+                                <span class="d-inline-block bg-primary rounded-circle p-1"></span>Mis Blogs
                             </a>
 
-                        <li><a class="dropdown-item d-flex align-items-center gap-2 py-2" href="}}">
-                                <span class="d-inline-block bg-info rounded-circle p-1"></span>
-                                Perfil
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="{{ url_for('auth.profile', id = g.user.id) }}">
+                                <span class="d-inline-block bg-info rounded-circle p-1"></span>Perfil
                             </a>
                         </li>
                         <li>
