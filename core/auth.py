@@ -11,6 +11,7 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
     if g.user:
+        flash("No puedes acceder al registro, ya que estas logeado", 'warning')
         return redirect(url_for('post.posts'))
 
     if request.method == 'POST':
@@ -40,6 +41,7 @@ def register():
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
     if g.user:
+        flash("No puedes acceder al login, ya que estas logeado", 'warning')
         return redirect(url_for('post.posts'))
 
     if request.method == 'POST':
@@ -53,13 +55,14 @@ def login():
         if user == None or not check_password_hash(user.password, password):
             error = 'Correo o contraseña incorrecta'
 
-        # Iniciando sesion
+        # Iniciando sessión
         if error is None:
             session.clear()
             session['user_id'] = user.id
+            flash("Inicio de sessión éxito", 'success')
             return redirect(url_for('post.posts'))
 
-        flash(error)
+        flash(error, 'error')
 
     return render_template('auth/login.html')
 
@@ -129,6 +132,7 @@ def profile(id):
             flash(error)
         else:
             db.session.commit()
+            flash("Perfil actualizado con éxito", 'success')
             return redirect(url_for('auth.profile', id=user.id))
 
         flash(error)

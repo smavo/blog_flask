@@ -1,0 +1,38 @@
+{% for message in get_flashed_messages(with_categories=true) %}
+{% set category = message[0] %}
+{% set message = message[1] %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            {% if category == 'success' %}
+            <div class="alert alert-success" role="alert" id="alert-message">
+                {{ message }}
+            </div>
+            {% elif category == 'error' %}
+            <div class="alert alert-danger" role="alert" id="alert-message">
+                {{ message }}
+            </div>
+            {% elif category == 'info' %}
+            <div class="alert alert-info" role="alert" id="alert-message">
+                {{ message }}
+            </div>
+            {% elif category == 'warning' %}
+            <div class="alert alert-warning" role="alert" id="alert-message">
+                {{ message }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+<script>
+    // Esta función desaparecerá el mensaje después de 3 segundos (3000 milisegundos)
+    setTimeout(function() {
+        var alertMessage = document.getElementById('alert-message');
+        if (alertMessage) {
+            alertMessage.style.display = 'none';
+        }
+    }, 3000); // tiempo en milisegundos, en este caso, 3 segundos
+</script>
