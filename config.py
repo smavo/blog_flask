@@ -1,4 +1,3 @@
-
 SQLITE = "sqlite:///project.db"
 POSTGRESQL = "postgresql+psycopg2://postgres:1nd1.sm4rt%%@localhost:5432/blog_flask"
 
@@ -9,4 +8,4 @@ class Config:
 
     SQLALCHEMY_DATABASE_URI = POSTGRESQL
 
-    CKEDITOR_PKG_TYPE = 'basic'  # full
+    CKEDITOR_PKG_TYPE = 'full'  # basic, standard, full

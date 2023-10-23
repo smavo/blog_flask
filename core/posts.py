@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, render_template, url_for, request, session, flash, redirect, g
 from .auth import login_required
 from .models import Post
 from core import db
@@ -15,9 +15,32 @@ def posts():
     return render_template('admin/posts.html', posts=posts)
 
 
-@bp.route('/create')
+@bp.route('/create', methods=('GET', 'POST'))
+@login_required
 def create():
-    return 'Crear Post'
+    if request.method == 'POST':
+        url = request.form.get('url')
+        url = url.replace(' ', '-')
+        title = request.form.get('title')
+        info = request.form.get('info')
+        content = request.form.get('ckeditor')
+
+        post = Post(g.user.id, url, title, info, content)
+
+        error = None
+
+        # Comparando url de post con los existentes
+        post_url = Post.query.filter_by(url=url).first()
+        if post_url == None:
+            db.session.add(post)
+            db.session.commit()
+            flash(f'El blog {post.title} se registro correctamente', 'success')
+            return redirect(url_for('post.posts'))
+        else:
+            error = f'El URL {url} ya esta registrado'
+        flash(error, 'error')
+    return render_template('admin/create.html')
+
 
 
 @bp.route('/update')
