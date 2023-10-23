@@ -40,6 +40,15 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        {% if posts.has_prev %}
+            <a href="{{ url_for('post.posts', page=posts.prev_num) }}">Anterior</a>
+        {% endif %}
+
+        {% if posts.has_next %}
+            <a href="{{ url_for('post.posts', page=posts.next_num) }}">Siguiente</a>
+        {% endif %}
+
     </div>
 
     <script>

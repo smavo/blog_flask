@@ -10,7 +10,8 @@ bp = Blueprint('post', __name__, url_prefix='/post')
 @login_required
 def posts():
     user_id = session.get('user_id')
-    posts = Post.query.filter_by(author=user_id).all()
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter_by(author=user_id).paginate(page=page, per_page=2)
     # posts = Post.query.all()
     return render_template('admin/posts.html', posts=posts)
 
