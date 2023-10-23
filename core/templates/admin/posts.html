@@ -17,6 +17,7 @@
                 <tr>
                     <th class="fs-5">Id </th>
                     <th class="fs-5">Título del Blog </th>
+                    <th class="fs-5">Url </th>
                     <th class="fs-5">Descripción </th>
                     <th colspan="2" class="fs-5">Acciones</th>
                 </tr>
@@ -27,10 +28,12 @@
                     <tr>
                         <td>{{ post.id }}</td>
                         <td>{{ post.title }}</td>
+                        <td>{{ post.url }}</td>
                         <td>{{ post.info|safe|truncate(90) }}</td>
                         <td>
                             <a href="{{ url_for('post.update', id=post.id) }}" class="btn btn-sm btn-warning">Editar</a>
-                            <a href="" class="btn btn-sm btn-danger">Eliminar</a>
+<!--                            <a href="{{ url_for('post.delete', id=post.id) }}" class="btn btn-sm btn-danger">Eliminar</a>-->
+                            <button onclick="confirmDelete({{ post.id }})" class="btn btn-danger btn-sm">Eliminar</button>
                         </td>
                     </tr>
                     {% endif %}
@@ -38,6 +41,26 @@
             </tbody>
         </table>
     </div>
+
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "Una vez eliminado el Post, no podrás recuperarlo",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/post/delete/' + id;
+                }
+            })
+        }
+    </script>
+
     {% endblock %}
 
     {% block message %} alert-success {% endblock %}

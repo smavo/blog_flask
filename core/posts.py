@@ -48,6 +48,7 @@ def update(id):
     post = Post.query.get_or_404(id)
 
     if request.method == 'POST':
+        post.url = request.form.get('url')
         post.title = request.form.get('title')
         post.info = request.form.get('info')
         post.content = request.form.get('ckeditor')
@@ -59,6 +60,13 @@ def update(id):
     return render_template('admin/update.html', post=post)
 
 
-@bp.route('/delete')
-def delete():
-    return 'Eliminar Post'
+@bp.route('/delete/<int:id>')
+@login_required
+def delete(id):
+    post = Post.query.get_or_404(id)
+    db.session.delete(post)
+    db.session.commit()
+    flash(f'El blog {post.title} se elimino correctamente', 'info')
+
+    return redirect(url_for('post.posts'))
+

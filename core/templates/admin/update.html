@@ -10,6 +10,10 @@
         <div class="body">
             <form method="post">
                 <div class="mb-3">
+                    <label for="url" class="form-label">URL de Blog</label>
+                    <input type="text" class="form-control" id="url" name="url" required value="{{ post.url }}">
+                </div>
+                <div class="mb-3">
                     <label for="title" class="form-label">Título</label>
                     <input type="text" class="form-control" id="title" name="title" required value="{{ post.title }}"
                         placeholder="Título del blog">
