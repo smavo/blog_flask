@@ -49,3 +49,4 @@ def posts_index():
     posts = Post.query.paginate(page=page, per_page=per_page, error_out=False)
     return render_template('posts.html', posts=posts, get_user=get_user)
 
+
