@@ -1,11 +1,15 @@
-SQLITE = "sqlite:///project.db"
-POSTGRESQL = "postgresql+psycopg2://postgres:1nd1.sm4rt%%@localhost:5432/blog_flask"
+
+import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+SQLITE = os.getenv('SQLITE')
 
 
 class Config:
     DEBUG = True
-    SECRET_KEY = 'smavodev'
-
-    SQLALCHEMY_DATABASE_URI = POSTGRESQL
-
-    CKEDITOR_PKG_TYPE = 'full'  # basic, standard, full
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = os.getenv('POSTGRESQL')
+    CKEDITOR_PKG_TYPE = os.getenv('CKEDITOR_PKG_TYPE')
