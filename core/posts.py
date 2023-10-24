@@ -16,7 +16,7 @@ def posts():
     # # posts = Post.query.all()
 
     page = request.args.get(get_page_parameter(), type=int, default=1)
-    per_page = 10  # Ajusta la cantidad de posts por página según tus necesidades
+    per_page = 10
     posts = Post.query.filter_by(author=user_id).paginate(page=page, per_page=per_page, error_out=False)
     return render_template('admin/posts.html', posts=posts)
 

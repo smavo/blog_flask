@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request
 from .models import User, Post
+from flask_paginate import Pagination, get_page_parameter
 
 bp = Blueprint('home', __name__)
 
@@ -29,7 +30,7 @@ def search():
 @bp.route('/', methods=['GET', 'POST'])
 def index():
     # posts = Post.query.all()
-    posts = Post.query.order_by(Post.created.desc()).limit(4).all()  # Los últimos 5 Mostrar
+    posts = Post.query.order_by(Post.created.desc()).limit(4)  # Los últimos 5 Mostrar
     return render_template('index.html', posts=posts, get_user=get_user)
 
 
@@ -41,6 +42,10 @@ def blog(url):
 
 @bp.route('/posts')
 def posts_index():
-    # posts = Post.query.all()
-    posts = Post.query.order_by(Post.created.desc()).all()
+    # posts = Post.query.order_by(Post.created.asc()).all()
+    # return render_template('posts.html', posts=posts, get_user=get_user)
+    page = request.args.get('page', 1, type=int)
+    per_page = 3
+    posts = Post.query.paginate(page=page, per_page=per_page, error_out=False)
     return render_template('posts.html', posts=posts, get_user=get_user)
+

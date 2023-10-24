@@ -54,8 +54,8 @@
 
     <div class="row">
         {% for post in posts | reverse %}
-        <div class="col-md-6">
-            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="pt-4 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <div class="h-100 row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                 <div class="col p-4 d-flex flex-column position-static">
                     <h3 class="mb-0">{{post.title}}</h3>
 
@@ -76,7 +76,7 @@
         </div>
         {% endfor %}
     </div>
-
+    <br>
      <div class="col container d-grid gap-2 col-4 mx-auto">
         <a href="{{ url_for('home.posts_index') }}" class="btn btn-dark">Ver más Posts</a>
      </div>
