@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office"
+      xmlns:v="urn:schemas-microsoft-com:vml" lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" hs-webfonts="true"
+          href="https://fonts.googleapis.com/css?family=Lato|Lato:i,b,bi">
+    <meta property="og:title" content="Email template">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        #email {
+          margin: auto;
+          width: 600px;
+          background-color: white;
+        }
+        .activate-btn{
+          font: inherit;
+          background-color: #012970;
+          border: none;
+          padding: 10px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          font-weight: 900;
+          border-radius: 5px;
+          text-decoration: none;
+        }
+    </style>
+</head>
+
+<body bgcolor="#F5F8FA" style="width: 100%; margin: auto 0; padding:0; font-family:Lato, sans-serif; font-size:16px; color:#33475B; word-break:break-word">
+
+<div id="email">
+    <table width="100%">
+        <tr>
+            <td align="center" style="color: #fff;">
+                <img alt="Logo" src="https://blog.smavodev.com/assets/logo_512x512.5a1cd389_Z1TlxW6.png" width="200px" align="middle">
+            </td>
+    </table>
+
+    <table bgcolor="#EAF0F6" width="100%" role="presentation" border="0" cellpadding="0" cellspacing="10px"
+           style="padding: 30px 30px 60px 60px;">
+        <tr>
+            <td>
+                <h2 class="card-title text-center mb-4"><i class="fas fa-check-circle text-success"></i>Registro de cuenta</h2>
+                <p class="card-text text-center">Hola <strong>{{ username }}</strong>, gracias por registrarte en nuestra aplicación.</p>
+                <br>
+                <div style="text-align: center;">
+                    <a href="{{domain}}/auth/login" class="activate-btn" style="color: #fff;">
+                        <i class="fas fa-home"></i> Inicie Sessión
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <table role="presentation" bgcolor="#012970" width="100%">
+        <tr>
+            <td align="center" style="padding: 15px 15px; color: #fff;">
+                <p>© 2023 <strong>Blog Flask V1.0</strong>, All Rights Reserved.</p>
+<!--                <a href="{{domain}}" style="color:#fff;">Visit Website</a>-->
+            </td>
+        </tr>
+    </table>
+
+
+</div>
+
+</body>
+
+</html>

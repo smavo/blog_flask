@@ -1,17 +1,31 @@
-from flask import Blueprint, render_template, request, url_for, redirect, flash, session, g
+from flask import Blueprint, render_template, request, url_for, redirect, flash, session, g, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from .models import User
-from core import db
+from core import db, mail
 from werkzeug.utils import secure_filename
 import os
+from flask_mail import Message
+
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
+
+
+def send_registration_email(email, username):
+
+    domain = os.environ.get('DOMINIO')
+
+    # Enviar el correo electrónico
+    msg = Message('Gracias por registrarse', sender='smavodev@gmail.com', recipients=[email])
+    with current_app.app_context():
+        email_template = render_template('auth/email_template.html', username=username, domain=domain)
+    msg.html = email_template
+    mail.send(msg)
 
 
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
     if g.user:
-        flash("No puedes acceder al registro, ya que estas logeado", 'warning')
+        flash("No puedes acceder al registro, ya que estás logeado", 'warning')
         return redirect(url_for('post.posts'))
 
     if request.method == 'POST':
@@ -26,14 +40,19 @@ def register():
 
         # Comparando nombre de usuario con los existentes
         user_email = User.query.filter_by(email=email).first()
+
         if user_email == None:
+
             db.session.add(user)
             db.session.commit()
+            send_registration_email(email, username)
+            flash(f'El usuario {username} se ha registrado con éxito', 'success')
             return redirect(url_for('auth.login'))
-        else:
-            error = f'El correo {email} ya esta registrado'
 
-        flash(error)
+        else:
+            error = f'El correo {email} ya está registrado'
+
+        flash(error, 'error')
 
     return render_template('auth/register.html')
 
